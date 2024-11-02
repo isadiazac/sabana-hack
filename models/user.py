@@ -1,7 +1,8 @@
 from mongoengine import Document, StringField, ListField, IntField, BooleanField, connect
+import os
 
 # Conectar a tu base de datos MongoDB
-connect('MDB_DATA')  # Reemplaza con el nombre de tu base de datos
+connect(os.getenv('MDB_DATA'))  # Reemplaza con el nombre de tu base de datos
 
 class Pacient(Document):
     # Campos básicos
