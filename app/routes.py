@@ -2,6 +2,8 @@ from flask import Blueprint, jsonify, render_template, request
 from src import analysis
 from src import analysis_of_feelings
 
+object_analysis = analysis_of_feelings.prepare()
+
 main = Blueprint('main', __name__)
 
 @main.route("/analyze", methods=["POST"])
@@ -22,7 +24,12 @@ def analyze():
     # Return a JSON response with the processed data or a confirmation message
     return jsonify({"message": "Data analyzed successfully", "oraciones": oraciones}), 200
 
-@main.route("/trainer")
-def about():
-    analysis_of_feelings.train()
-    return "Hola Mundo"
+@main.route("/trainer" , methods=["POST"])
+def analysisData():
+    body = request.get_json()
+    # Check if 'text' is in the body
+    if not body or "text" not in body:
+        return jsonify({"error": "Missing 'text' field"}), 400
+    
+    text, result = (body["text"],analysis_of_feelings.analyze_feelings([body["text"]] ,object_analysis))
+    return {"message" : f"Frase: {text}\nSentimiento: {result[0]['label']} - Confianza: {result[0]['score']:.2f}"}, 200 

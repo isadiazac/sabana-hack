@@ -1,5 +1,7 @@
-import nltk
-from nltk.corpus import stopwords
+from transformers import pipeline
 
 def train():
-    pass
+
+    sentiment_pipeline = pipeline("sentiment-analysis")
+    result = sentiment_pipeline("El servicio fue increíble, estoy muy satisfecho")
+    print("Sentimiento:", result)
