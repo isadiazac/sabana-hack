@@ -1,12 +1,12 @@
-# Ficha Técnica - [Nombre del Proyecto]
+# Ficha Técnica - VitalTrack
 
 ## Descripción breve
 
-Escribe una breve descripción de la solución.
+VitalTrack es un algoritmo que lee, analiza y clasifica las bases de datos clínicos para facilitar la digitación de las historias a las bases y evitar errores tipográficos, de entrada manual, codificación y de formato incorrectos.
 
 ## Nivel de desarrollo
 
-Indica el nivel de desarrollo actual de la solución (ejemplo: prototipo funcional, versión preliminar, etc.)
+El nivel de desarrollo se encuentra en una fase intermedia (Prototipo Funcional). Las funcionalidades básicas están implementadas y operativas, pero se requiere más trabajo en aspectos como la optimización del rendimiento, la mejora de la precisión en el análisis emocional y la creación de una interfaz amigable para el usuario
 
 ## Link al video
 
@@ -14,19 +14,53 @@ Indica el nivel de desarrollo actual de la solución (ejemplo: prototipo funcion
 
 ## Ventajas o fortalezas de nuestra propuesta
 
-1. ...
-2. ...
+_1. Procesamiento de Lenguaje Natural Avanzado_
+1.1. Utiliza bibliotecas como NLTK y spaCy para un análisis lingüístico sofisticado.
+1.2. Implementa técnicas avanzadas como tokenización, extracción de entidades y generación de n-gramas.
+
+_2. Flexibilidad en el Análisis_
+2.1. Puede analizar diferentes campos médicos (nódulos, calcificaciones, asimetrías, etc.) de manera adaptable para otras investigaciones futuras.
+2.2. Permite la configuración de umbrales de similitud para ajustar la sensibilidad del análisis.
+
+_3. Análisis Contextual:_
+3.1. Examina las palabras en su contexto (Historia clínica o Estudio), mejorando la precisión de la interpretación.
+3.2. Utiliza técnicas de coincidencia difusa (Funza matching) para identificar palabras y frases relevantes.
+
+_4. Estructura Modular:_
+4.1. El código está organizado en funciones separadas, facilitando el mantenimiento y la expansión futura.
+
+_5. Análisis de Sentimientos_
+5.1. Se incorporo el análisis de sentimiento para campos específicos como nódulos, microcalcificaciones y asimetrías.
+
+_6. Personalización_
+6.1 Permite la configuración de campos de análisis a través de la clase "Usher", ofreciendo flexibilidad para diferentes tipos de informes médicos.
 
 ## Desventajas o debilidades de nuestra propuesta
 
-1. ...
-2. ...
+_1. Expansión de la extracción de datos_
+1.1. Posibilidad de ampliar el alcance para capturar una gama más completa de variables clínicas, mejorando la comprensión de cada caso específico.
+
+_2. Optimización de dependencias_
+2.1. Potencial para consolidar funcionalidades para mejorar la eficiencia y facilitar el mantenimiento a largo plazo del sistema.
+
+_3. Simplificación y modularización_
+3.1. Oportunidad para refinar aún más la estructura del código, haciéndolo más accesible y fácil de mantener sin sacrificar funcionalidad, facilitando futuras expansiones y adaptaciones.
 
 ## Detalles técnicos
 
-- **Tecnologías utilizadas**: [Ej. Python, Node.js, React, ...]
-- **Herramientas usadas**: [Ej. Docker, MongoDB, Figma, ...]
-- **Alcance del prototipo**: Describe brevemente el alcance actual del prototipo y sus limitaciones.
+- _Tecnologías utilizadas_:
+  _1. Python:_ Lenguaje de programación principal para el desarrollo del prototipo.
+  _2. spaCy:_ Biblioteca de procesamiento de lenguage natural (NLP) utilizada para la tokenización, análisis de entidades y generación de n-gramas, facilitando el entendimiento del texto en español.
+  _3. NLTK:_ Conocido como Natural Lenguage ToolKit, fue utilizado para la tokenización y manipulación de texto, espcialmente para trabajar con n-gramas y análisis linguístico.
+  _4. FuzzyWuzzy:_ Biblioteca para comparacion de cadenas que permite filtrar palabras y frases similares mediante algoritmos de coincidencia difusa.
+  _5. Transformer:_ Es fundamental para el desarrollo, ya que permite acceder a modelos avanzados de PNL y facilitar su uso a traves de la interfaz de "Pipeline".
+
+- _Herramientas usadas_:
+  _1. Word_tokenize:_ Utilizada para la tokenización de texto, permitiendo dividir el texto en palabras individuales.
+  _2. Fuzz:_ utilizada para la comparación de cadenas, que permite medir la similitud entre palabras y frases mediante algoritmos de coincidencia difusa.
+  _3. analysis_of_feelings:_ Importa un módulo que se encarga del análisis de sentimientos, sugiriendo que contiene funciones específicas para evaluar las emociones en el texto.
+
+- _Alcance del prototipo_: Describe brevemente el alcance actual del prototipo y sus limitaciones.
   Se puede agregar cualquier otro detalle técnico que se desee compartir como diagramas, presupuesto, imágenes, etc.
 
 ## Repositorio del proyecto
