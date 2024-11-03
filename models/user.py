@@ -1,4 +1,5 @@
 from typing import Dict, List, Optional, Any
+
 class Paciente:
     CAMPOS = {
         'nodulo': {
@@ -108,4 +109,10 @@ class Paciente:
     def get_campo(self, campo: str) -> Optional[str]:
         return self.datos.get(campo)
 
-    
+    def to_dict(self) -> Dict[str, Any]:
+        """
+        Convierte el objeto Paciente en un diccionario serializable.
+        """
+        return {
+            campo: valor for campo, valor in self.datos.items()
+        }
