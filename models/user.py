@@ -1,24 +1,24 @@
 
 class Pacient(Document):
     # Campos básicos
-    nodulo = BooleanField(required=True)  # 0.No, 1.Si
+    nodulo = StringField(choices=['No', 'Si'], required=True) 
     morfologia = StringField(choices=['Ovalado', 'Redondo', 'Irregular'], required=True)
-    margenes = ListField(StringField(choices=[
+    margenes = StringField(choices=[
         'Circunscritos',
         'Microlobulados',
         'Indistintos o mal definidos',
         'Obscurecidos',
         'Espiculados'
-    ]), required=True)
+    ], required=True)
 
     # Densidad del nódulo
-    densidad = StringField(choices=['Densidad Grasa', 'Baja Densidad', 'Igual Densidad', 'Alta Densidad'], required=True)
+    densidad = StringField(choices=['Densidad Grasa', 'Baja Densidad (Hipodenso)', 'Igual Densidad (Isodenso)', 'Alta Densidad (Hiperdenso)'], required=True)
 
     # Presencia de microcalcificaciones
-    microcalcificaciones = BooleanField(required=True)  # 0.No, 1.Si
+    microcalcificaciones = StringField(choices=['No', 'Si'], required=True) 
 
     # Calcificaciones típicamente benignas
-    calcificaciones_benignas = ListField(StringField(choices=[
+    calcificaciones_benignas = StringField(choices=[
         'Cutaneas',
         'Vasculares',
         'Gruesas o Pop Corn',
@@ -28,27 +28,27 @@ class Pacient(Document):
         'Distroficas',
         'Leche de Calcio',
         'Suturas'
-    ]), required=False)
+    ], required=False)
 
     # Calcificaciones morfología sospechosa
-    calcificaciones_sospechosas = ListField(StringField(choices=[
+    calcificaciones_sospechosas = StringField(choices=[
         'Gruesas heterogeneas',
         'Amorfas',
         'Finas pleomorficas',
         'Lineas fianas o lineales ramificadas'
-    ]), required=False)
+    ], required=False)
 
     # Distribución de las calcificaciones
-    distribucion_calcificaciones = ListField(StringField(choices=[
+    distribucion_calcificaciones = StringField(choices=[
         'Difusas',
         'Regionales',
         'Agrupadas (cumulo)',
         'Segmentaria',
         'Lineal'
-    ]), required=False)
+    ], required=False)
 
     # Presencia de asimetrias
-    asimetrias = BooleanField(required=True)  # 0.No, 1.Si
+    asimetrias = StringField(choices=['No', 'Si'], required=True)  
 
     # Tipo de asimetría
     tipo_asimetria = StringField(choices=[
@@ -59,13 +59,13 @@ class Pacient(Document):
     ], required=False)
 
     # Hallazgos asociados
-    hallazgos_asociados = ListField(StringField(choices=[
+    hallazgos_asociados = StringField(choices=[
         'Retracción de la piel',
         'Retracción del pezón',
         'Engrosamiento de la piel',
         'Engrosamiento trabecular',
         'Adenopatias axilares'
-    ]), required=False)
+    ], required=False)
 
     # Lateralidad del hallazgo
     lateralidad = StringField(choices=['Derecho', 'Izquierdo', 'Bilateral'], required=True)
