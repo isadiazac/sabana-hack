@@ -1,3 +1,17 @@
+# Ficha Técnica - VitalTrack
+
+## Descripción breve
+
+VitalTrack es un algoritmo que lee, analiza y clasifica las bases de datos clínicos para facilitar la digitación de las historias a las bases y evitar errores tipográficos, de entrada manual, codificación y de formato incorrectos.
+
+## Nivel de desarrollo
+
+El nivel de desarrollo se encuentra en una fase intermedia (Prototipo Funcional). Las funcionalidades básicas están implementadas y operativas, pero se requiere más trabajo en aspectos como la optimización del rendimiento, la mejora de la precisión en el análisis emocional y la creación de una interfaz amigable para el usuario
+
+## Link al video
+
+[Video de presentación](URL)
+
 ## Ventajas o fortalezas de nuestra propuesta
 
 _1. Procesamiento de Lenguaje Natural Avanzado_ <br/>
