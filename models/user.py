@@ -1,8 +1,3 @@
-from mongoengine import Document, StringField, ListField, IntField, BooleanField, connect
-import os
-
-# Conectar a tu base de datos MongoDB
-connect(os.getenv('MDB_DATA'))  # Reemplaza con el nombre de tu base de datos
 
 class Pacient(Document):
     # Campos básicos
@@ -76,4 +71,5 @@ class Pacient(Document):
     lateralidad = StringField(choices=['Derecho', 'Izquierdo', 'Bilateral'], required=True)
 
     # BIRADS
-    birads = IntField(choices=[0, 1, 2, 3, 4, 5, 6], required=True)
+    birads = StringField(choices=["0", "1", "2", "3", "4A", "4B", "4C", "5", "6"], required=True)
+
