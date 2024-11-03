@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, render_template, request
 from src import analysis
+from src import analysis_of_feelings
 
 main = Blueprint('main', __name__)
 
@@ -21,6 +22,7 @@ def analyze():
     # Return a JSON response with the processed data or a confirmation message
     return jsonify({"message": "Data analyzed successfully", "oraciones": oraciones}), 200
 
-@main.route("/about")
+@main.route("/trainer")
 def about():
-    return render_template("about.html")
+    analysis_of_feelings.train()
+    return "Hola Mundo"

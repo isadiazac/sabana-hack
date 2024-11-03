@@ -1,13 +1,25 @@
 import nltk
 import os
-nltk.download('punkt_tab')
+import spacy
+
 from nltk.tokenize import sent_tokenize
+
+nlp = spacy.load("es_core_news_sm")
+nltk.download('punkt_tab')
 
 # Función que analiza los datos
 def analyze_data(data):
     # Tokenización de oraciones
     oraciones = sent_tokenize(data)
-    return oraciones
+
+    for oracion in oraciones:
+        # Procesamiento con spaCy
+        doc = nlp(oracion)
+        
+            
+
+
+    return ";("
 
 
 
