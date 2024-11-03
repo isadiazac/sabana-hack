@@ -60,8 +60,9 @@ _3. Simplificación y modularización_
   _2. Fuzz:_ utilizada para la comparación de cadenas, que permite medir la similitud entre palabras y frases mediante algoritmos de coincidencia difusa.
   _3. analysis_of_feelings:_ Importa un módulo que se encarga del análisis de sentimientos, sugiriendo que contiene funciones específicas para evaluar las emociones en el texto.
 
-- _Alcance del prototipo_: Describe brevemente el alcance actual del prototipo y sus limitaciones.
-  Se puede agregar cualquier otro detalle técnico que se desee compartir como diagramas, presupuesto, imágenes, etc.
+- _Alcance del prototipo_: El prototipo está diseñado para analizar datos textuales de pacientes, extrayendo sentimientos y palabras clave relevantes mediante técnicas de procesamiento de lenguaje natural. Utiliza tokenización y n-gramas para identificar entidades significativas y evaluar el tono emocional de las entradas. Al filtrar información relevante y contextualizar términos clave, el sistema proporciona herramientas valiosas para que los profesionales de la salud mejoren la calidad del cuidado.
+  _Limitaciones_
+  _Dependencia del umbral de similitud:_ Un umbral fijo para determinar la similitud de palabras puede no ser adecuado en todos los contextos, lo que podría resultar en la omisión de información crítica o en la inclusión de datos irrelevantes.
 
 ## Repositorio del proyecto
 
