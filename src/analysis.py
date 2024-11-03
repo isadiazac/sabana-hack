@@ -1,4 +1,16 @@
-text = " MAMOGRAFIA UNILATERAL IZQUIERDA    Indicaciones:   Antecedente de mastectomía derecha y cuadrantectomía izquierda. No se cuenta con estudios previos para comparación.  Dosis :  2.8   mGy. Se practica técnica digital directa, con tomosíntesis, obteniendo proyecciones sintéticas craneocaudal y mediolateral oblicua.  Hallazgos:  Tejido fibroglandular disperso.  Distorsión de arquitectura, calcificaciones distróficas y clips de reparo en cuadrante superior externo por antecedente quirúrgico.  No hay opacidades que indiquen la presencia de nódulos, no hay áreas de distorsión de la arquitectura mamaria, ni agrupaciones sospechosas de microcalcificaciones.  Piel, y pezón de aspecto usual.  Axila sin evidencia masas o adenopatías.   CONCEPTO: BI-RADS 2. Hallazgos benignos en mama izquierda.MEDICO RADIOLOGO: Durán Guerrero Johan Alberto          27/08/2022 11:40:13 a. m."
+import nltk
+import os
+nltk.download('punkt_tab')
+from nltk.tokenize import sent_tokenize
 
-def analize_data(data):
-    pass
+# Función que analiza los datos
+def analyze_data(data):
+    # Tokenización de oraciones
+    oraciones = sent_tokenize(data)
+    return oraciones
+
+
+
+
+
+
