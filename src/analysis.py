@@ -1,4 +1,3 @@
-from flask import request
 import nltk
 import spacy
 from nltk.tokenize import word_tokenize
@@ -13,84 +12,94 @@ nltk.download('punkt')
 
 # Variables y configuración
 User = user.Paciente()
-UMBRAL_SIMILITUD = 90
+UMBRAL_SIMILITUD = 80
 OBJECT_ANALYSIS = analysis_of_feelings.prepare()
 
-# Función que analiza los datos
 def analyze_data(data):
-    # Tokenización de oraciones
-    (phrases, separate_words) = get_text(data)
-    filtered_words = []
-    filtered_phrases = []
+    """ Analiza los datos del paciente para extraer sentimientos y palabras clave. """
+    data = data.lower()
+    phrases, separate_words = get_text(data)
+    
+    filtered_words = set()  # Usar un conjunto para palabras únicas
+    filtered_phrases = set()
+
     for campo in User.CAMPOS:
-        # Filtrar palabras similares a las opciones de cada campo
-        filtered_words.extend( filter_words(separate_words, campo,80))
-        # Obtener las palabras más relevantes
-        filtered_phrases.extend( filter_words(phrases, campo, 80))
-    print(f"Palabras similares: {filtered_words}")
-    print(f"Frases similares: {filtered_phrases}")
+        filtered_words.update(filter_words(separate_words, campo, UMBRAL_SIMILITUD))
+        filtered_phrases.update(filter_phrases(phrases, campo))
 
-
-    # Análisis de palabras solas
-    for word in filtered_words:
-        contexto = get_word_context(data, word)
-        print(f"Contexto de la palabra '{word}': {contexto}")
+        for word in User.CAMPOS[campo]['choices']:
+            filtered_words.update(filter_words(separate_words, word, UMBRAL_SIMILITUD))
+            filtered_phrases.update(filter_phrases(phrases, word))
+    print(filtered_words)
+    print(filtered_phrases)
+    analyze_filtered_words(filtered_words, data)
+    analyze_filtered_phrases(filtered_phrases, data)
 
     return User
 
 def get_text(text):
-    # Tokenización y procesamiento de spaCy
+    """ Tokeniza el texto en frases y palabras, generando bigramas y trigramas. """
     doc = nlp(text)
-
-    # Crear listas para almacenar frases y palabras separadas
-    phrases = []
-    separate_words = set()  # Usar un conjunto para palabras únicas
-
-    # Extraer entidades nombradas
-    for entity in doc.ents:
-        phrases.append(entity.text)
-
-    # Tokenizar y obtener palabras no incluidas en las frases (palabras separadas)
-    tokens = [token.text for token in doc if not token.is_stop and not token.is_punct and token.text not in phrases]
+    phrases = {entity.text for entity in doc.ents}  # Conjunto para frases únicas
+    tokens = [token.text for token in doc if not token.is_stop and not token.is_punct]
 
     # Generar n-grams
-    bigrams = [' '.join(bigram) for bigram in ngrams(tokens, 2)]
-    trigrams = [' '.join(trigram) for trigram in ngrams(tokens, 3)]
+    bigrams = {' '.join(bigram) for bigram in ngrams(tokens, 2)}
+    trigrams = {' '.join(trigram) for trigram in ngrams(tokens, 3)}
 
-    # Añadir n-grams a frases
-    phrases.extend(bigrams)
-    phrases.extend(trigrams)
+    phrases.update(bigrams)
+    phrases.update(trigrams)
 
-    # Separar palabras únicas no agrupadas
-    for token in tokens:
-        separate_words.add(token)
+    return (list(phrases), list(set(tokens)))  # Convertir a lista para devolver
 
-    return (phrases, list(separate_words))  # Convertir de nuevo a lista
-
-
-def filter_words(words, target_word, threshold=UMBRAL_SIMILITUD):
-    # Filtrar palabras similares a la palabra objetivo
+def filter_words(words, target_word, threshold):
+    """ Filtra palabras similares a la palabra objetivo. """
     return [word for word in words if fuzz.partial_ratio(word.lower(), target_word.lower()) >= threshold]
 
+def filter_phrases(phrases, target_word):
+    """ Filtra frases que contienen la palabra objetivo. """
+    return [phrase for phrase in phrases if fuzz.partial_ratio(target_word, phrase) >= UMBRAL_SIMILITUD]
 
-def get_word_context(text, target_word, context_words=3):
-    # Tokenizar el texto en palabras
+def analyze_filtered_words(filtered_words, data):
+    """ Analiza las palabras filtradas en el contexto del texto. """
+    for word in filtered_words:
+        contexto = get_word_context(data, word)
+        for campo in User.CAMPOS:
+            if campo in contexto:
+                analyze_feelings(campo, contexto)
+
+def analyze_filtered_phrases(filtered_phrases, data):
+    """ Analiza las frases filtradas. """
+    for campo in User.CAMPOS:
+        for phrase in filtered_phrases:
+            if fuzz.partial_ratio(campo.lower(), phrase.lower()) >= UMBRAL_SIMILITUD:
+                analyze_feelings(campo, phrase)
+
+def get_word_context(text, target_word, context_words=5):
+    """ Obtiene el contexto de una palabra objetivo en el texto. """
     words = word_tokenize(text)
-    
-    # Encontrar los índices de la palabra objetivo
     target_indices = [i for i, word in enumerate(words) if word.lower() == target_word.lower()]
-    
     contexts = []
-    
+
     for index in target_indices:
-        # Calcular los índices de inicio y fin para el contexto
         start_index = max(0, index - context_words)
         end_index = min(len(words), index + context_words + 1)  # +1 para incluir la palabra objetivo
-        
-        # Extraer el contexto
         context = words[start_index:end_index]
-        contexts.append(' '.join(context))  # Agregar el contexto como una cadena
+        contexts.append(' '.join(context))
 
-    return ' | '.join(contexts)  # Devolver todos los contextos separados por ' | '
+    return ' | '.join(contexts)
 
-# Resto de tu código permanece igual
+def analyze_feelings(campo, text):
+    """ Analiza los sentimientos relacionados con un campo. """
+    if campo in ['nodulo', 'microcalcificaciones', 'asimetrias']:
+        result = analysis_of_feelings.analyze_feelings(text, OBJECT_ANALYSIS)
+        print(result)   
+        valor = User.CAMPOS[campo]['choices'][1] if result[0]['label'] > "3 star" else User.CAMPOS[campo]['choices'][0]
+        User.set_campo(campo, valor )
+    else:
+        valor = encontrar_elemento_en_cadena(User.CAMPOS[campo]['choices'], text)
+        User.set_campo(campo, valor if valor else "N.A")  # Asignar valor o "N.A."
+
+def encontrar_elemento_en_cadena(lista, cadena):
+    """ Encuentra un elemento en la lista que se asemeje a la cadena dada. """
+    return next((elemento for elemento in lista if fuzz.partial_ratio(elemento.lower(), cadena.lower()) >= UMBRAL_SIMILITUD), None)

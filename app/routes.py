@@ -31,3 +31,13 @@ def analysisData():
     
     analysis.get_text(body["text"]) 
     return jsonify({"message": "Data analyzed"}), 200
+
+import prueba
+@main.route("/feelings", methods=["POST"])
+def analysisOfFeelings():
+    body = request.get_json()
+    # Check if 'text' is in the body
+    if not body or "text" not in body:
+        return jsonify({"error": "Missing 'text' field"}), 400
+    prueba.analyze_data(body["text"])
+    return jsonify({"message": "Feelings analyzed"}), 200

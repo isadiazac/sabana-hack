@@ -28,7 +28,7 @@ class Paciente:
             'choices': ['No', 'Si'],
             'required': True
         },
-        'calcificaciones_benignas': {
+        'calcificaciones benignas': {
             'choices': [
                 'Cutaneas',
                 'Vasculares',
@@ -42,7 +42,7 @@ class Paciente:
             ],
             'required': True
         },
-        'calcificaciones_sospechosas': {
+        'calcificaciones sospechosas': {
             'choices': [
                 'Gruesas heterogeneas',
                 'Amorfas',
@@ -51,7 +51,7 @@ class Paciente:
             ],
             'required': True
         },
-        'distribucion_calcificaciones': {
+        'distribucion calcificaciones': {
             'choices': [
                 'Difusas',
                 'Regionales',
@@ -62,10 +62,10 @@ class Paciente:
             'required': True
         },
         'asimetrias': {
-            'choices': ['No', 'Si'],
+            'choices': ['Si', 'No'],
             'required': True
         },
-        'tipo_asimetria': {
+        'tipo asimetria': {
             'choices': [
                 'Asimetria',
                 'Asimetria global',
@@ -74,7 +74,7 @@ class Paciente:
             ],
             'required': True
         },
-        'hallazgos_asociados': {
+        'hallazgos asociados': {
             'choices': [
                 'Retracción de la piel',
                 'Retracción del pezón',
@@ -89,7 +89,7 @@ class Paciente:
             'required': True
         },
         'birads': {
-            'choices': ["0", "1", "2", "3", "4A", "4B", "4C", "5", "6"],
+            'choices': ["0", "1", "2", "3", "4A", "4B", "4C", "5", "6", "N.A"],
             'required': True
         }
     }
